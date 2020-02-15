@@ -1,113 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:gauge="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button_select_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Select bt device"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/bt_selected_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Device not selected"
-        app:layout_constraintBottom_toBottomOf="@+id/button_select_device"
-        app:layout_constraintStart_toEndOf="@+id/button_select_device"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Button
-        android:id="@+id/button_connect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Connect to device"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_select_device" />
-
-
-    <TextView
-        android:id="@+id/bt_connection_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Not connected"
-        app:layout_constraintBottom_toBottomOf="@+id/button_connect"
-        app:layout_constraintStart_toEndOf="@+id/button_connect"
-        app:layout_constraintTop_toTopOf="@+id/button_connect" />
-
-    <Button
-        android:id="@+id/button_init_obd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Init OBD"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_connect" />
-
-    <TextView
-        android:id="@+id/bt_obd_status"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="OBD uninitialized"
-        app:layout_constraintBottom_toBottomOf="@+id/button_init_obd"
+    <com.szklimek.base.widget.gauge.Gauge
+        android:id="@+id/rpm_gauge"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="@dimen/margin_12x"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_init_obd"
-        app:layout_constraintTop_toTopOf="@+id/button_init_obd" />
-
-    <Button
-        android:id="@+id/button_load_rpm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
-        android:text="Load RPM"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_init_obd" />
+        app:layout_constraintTop_toTopOf="parent"
+        gauge:initialValue="0"
+        gauge:labelTextSize="42"
+        gauge:maxValue="80"
+        gauge:minValue="0"
+        gauge:totalNicks="120"
+        gauge:majorNickInterval="10"
+        app:lowerText="RPM"
+        app:upperText=""
+        gauge:valuePerNick="1" />
 
     <TextView
         android:id="@+id/rpm_status"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Not loaded"
-        app:layout_constraintBottom_toBottomOf="@+id/button_load_rpm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_init_obd"
-        app:layout_constraintTop_toTopOf="@+id/button_load_rpm" />
-
-    <Button
-        android:id="@+id/button_close_obd"
+        style="@style/Text.Head.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:text="Close OBD"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_load_rpm" />
+        android:layout_marginBottom="@dimen/margin_10x"
+        android:gravity="center_horizontal"
+        android:minEms="5"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/rpm_gauge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/button_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4x"
+        android:text="Start"
+        app:layout_constraintBottom_toBottomOf="@+id/button_setup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_setup" />
+
+
+    <Button
+        android:id="@+id/button_setup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4x"
+        android:text="Open device setup"
+        app:layout_constraintBottom_toTopOf="@+id/obd_state"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/obd_close_status"
+        android:id="@+id/obd_state"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Not loaded"
-        app:layout_constraintBottom_toBottomOf="@+id/button_close_obd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_init_obd"
-        app:layout_constraintTop_toTopOf="@+id/button_close_obd" />
+        android:layout_margin="@dimen/margin_4x"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-
+    <TextView
+        android:id="@+id/connection_state"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4x"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

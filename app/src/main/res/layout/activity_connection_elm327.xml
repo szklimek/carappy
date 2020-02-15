@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_select_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4x"
+        android:text="Select bt device"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/paired_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4x"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/button_select_device"
+        app:layout_constraintStart_toEndOf="@+id/button_select_device"
+        app:layout_constraintTop_toTopOf="@+id/button_select_device" />
+
+
+    <Button
+        android:id="@+id/button_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4x"
+        android:text="Connect to device"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_select_device" />
+
+
+    <TextView
+        android:id="@+id/connection_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4x"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/button_connect"
+        app:layout_constraintStart_toEndOf="@+id/button_connect"
+        app:layout_constraintTop_toTopOf="@+id/button_connect" />
+
+    <Button
+        android:id="@+id/button_init_obd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4x"
+        android:text="Init OBD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_connect" />
+
+    <Button
+        android:id="@+id/button_close_obd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Close OBD"
+        app:layout_constraintStart_toEndOf="@+id/button_init_obd"
+        app:layout_constraintTop_toTopOf="@+id/button_init_obd" />
+
+    <TextView
+        android:id="@+id/obd_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4x"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/button_close_obd"
+        app:layout_constraintStart_toEndOf="@+id/button_close_obd"
+        app:layout_constraintTop_toTopOf="@+id/button_close_obd" />
+
+
+    <Button
+        android:id="@+id/button_obd_send_custom_command"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send OBD command"
+        app:layout_constraintEnd_toEndOf="@+id/obd_custom_command_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/obd_custom_command_edit_text" />
+
+
+    <EditText
+        android:id="@+id/obd_custom_command_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="36dp"
+        android:layout_marginTop="36dp"
+        android:hint="Command to send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_close_obd" />
+
+    <TextView
+        android:id="@+id/title_logs"
+        style="@style/Text.Head.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_4x"
+        android:text="Logs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_obd_send_custom_command" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/logs_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_2x"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_logs" />
+</androidx.constraintlayout.widget.ConstraintLayout>

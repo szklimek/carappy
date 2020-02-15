@@ -1,46 +1,129 @@
 package com.szklimek.auto
 
-import android.bluetooth.BluetoothAdapter
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
+import com.github.pires.obd.commands.ObdCommand
+import com.github.pires.obd.commands.engine.RPMCommand
+import com.szklimek.auto.obd.elm327.Elm327BluetoothConnectionActivity
+import com.szklimek.auto.obd.ObdService
+import com.szklimek.auto.obd.ConnectionState
+import com.szklimek.auto.obd.ObdServiceState
+import com.szklimek.auto.obd.ObdState
+import com.szklimek.base.BaseActivity
+import com.szklimek.base.Log
+import com.szklimek.base.extensions.startWithTransition
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() {
 
-    private val dataManager: DataManager by inject()
-    private val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+class MainActivity : BaseActivity() {
+
+    private val obdService: ObdService by inject()
+    private val connectionStateObserver = Observer<ConnectionState> { updateConnectionState(it) }
+    private val obdStateObserver = Observer<ObdState> { updateObdState(it) }
+    private val serviceStateObserver = Observer<ObdServiceState> { updateObdServiceState(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initButtons()
-        updateDeviceStatus()
+        obdService.connectionState.observe(this, connectionStateObserver)
+        obdService.obdState.observe(this, obdStateObserver)
+        obdService.serviceState.observe(this, serviceStateObserver)
     }
 
     private fun initButtons() {
-        button_select_device.setOnClickListener { showPairedDevicesList() }
-
+        button_setup.setOnClickListener {
+            Log.d("Open device setup")
+            startWithTransition(Intent(this, Elm327BluetoothConnectionActivity::class.java))
+        }
     }
 
-    private fun updateDeviceStatus() {
-        bt_selected_device.text =
-            dataManager.getPairedDevice()?.run { "$name: [$address]" } ?: "No selected device"
-    }
-
-    private fun showPairedDevicesList() {
-        val devices = bluetoothAdapter.bondedDevices.toList()
-        Log.d("Paired devices: ${devices.map { "[${it.name}; ${it.address}; ${it.type}; ${it.bondState}]" }}")
-        AlertDialog.Builder(this)
-            .setTitle("Select OBD BT device")
-            .setItems(devices.map { it.name }.toTypedArray()) { _, selectedPosition ->
-                dataManager.storePairedDevice(devices[selectedPosition])
-                updateDeviceStatus()
+    private fun startSession() {
+        obdService.startSession()
+        CoroutineScope(Dispatchers.IO).launch {
+            while (true) {
+                if (obdService.serviceState.value is ObdServiceState.Started &&
+                    obdService.connectionState.value == ConnectionState.Connected &&
+                    obdService.obdState.value == ObdState.ObdReady
+                ) {
+                    loadEcuData()
+                }
+                if (obdService.serviceState.value !is ObdServiceState.Started) {
+                    return@launch
+                }
             }
-            .setPositiveButton("Done") { _, _ -> }
-            .show()
+        }
     }
 
+    private fun loadEcuData() {
+        Log.d("")
+        listOf(
+            RPMCommand()
+        ).forEach { command ->
+            obdService.runCommand(command).apply {
+                when {
+                    isFailure -> {
+                        Log.d("Unable to retrieve OBD data for command: $command")
+                    }
+                    isSuccess -> updateEcuDataViews(command, getOrDefault(""))
+                }
+            }
+        }
+    }
+
+    private fun updateEcuDataViews(command: ObdCommand, result: String) {
+        if (result.isEmpty()) {
+            Log.d("${command.name} returned empty result. Aborting")
+            return
+        }
+        when (command) {
+            is RPMCommand -> {
+                rpm_status.text = result
+                runCatching { rpm_gauge.moveToValue(result.toFloat().div(100)) }
+            }
+        }
+    }
+
+    private fun updateConnectionState(connectionState: ConnectionState) {
+        connection_state.text = when (connectionState) {
+            is ConnectionState.Connected -> "Connected"
+            is ConnectionState.Connecting -> "Connecting"
+            is ConnectionState.NotConnected -> "Not connected"
+        }
+    }
+
+    private fun updateObdState(obdState: ObdState) {
+        obd_state.text = when (obdState) {
+            is ObdState.ObdReady -> "OBD ready"
+            is ObdState.ObdNotReady -> "OBD not ready"
+            is ObdState.ObdLoading -> "OBD loading"
+        }
+    }
+
+    private fun updateObdServiceState(obdServiceState: ObdServiceState) {
+        button_action.apply {
+            when (obdServiceState) {
+                is ObdServiceState.Started -> {
+                    text = "Stop"
+                    isEnabled = true
+                    setOnClickListener { obdService.stopSession() }
+                }
+                is ObdServiceState.Initialized -> {
+                    text = "Start"
+                    isEnabled = true
+                    setOnClickListener { startSession() }
+                }
+                is ObdServiceState.Uninitialized -> {
+                    text = "Start"
+                    isEnabled = false
+                    setOnClickListener { }
+                }
+            }
+        }
+    }
 }

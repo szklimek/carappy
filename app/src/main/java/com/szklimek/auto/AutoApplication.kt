@@ -1,6 +1,8 @@
 package com.szklimek.auto
 
 import android.app.Application
+import com.szklimek.auto.obd.ObdService
+import com.szklimek.base.Log
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
@@ -19,5 +21,6 @@ class AutoApplication : Application(), KoinComponent {
 }
 
 val appModule = module {
-    factory { DataManager(androidContext()) }
+    factory { PreferenceManager(androidContext()) }
+    single { ObdService(get()) }
 }

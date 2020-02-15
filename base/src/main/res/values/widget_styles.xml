@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icon_default">200dp</dimen>
+
+    <dimen name="icon_small">24dp</dimen>
+    <dimen name="icon_medium">36dp</dimen>
+    <dimen name="icon_large">48dp</dimen>
+    <dimen name="icon_x_large">64dp</dimen>
+    <dimen name="icon_xx_large">80dp</dimen>
+
+    <dimen name="image_small">100dp</dimen>
+    <dimen name="image_medium">150dp</dimen>
+    <dimen name="image_large">200dp</dimen>
+
+    <dimen name="avatar_small">48dp</dimen>
+    <dimen name="avatar_medium">64dp</dimen>
+    <dimen name="avatar_large">80dp</dimen>
+    <dimen name="avatar_x_large">120dp</dimen>
+
+    <dimen name="button_corner_radius">8dp</dimen>
+
+    <!-- Image buttons -->
+    <style name="ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_height">@dimen/icon_medium</item>
+        <item name="android:layout_width">@dimen/icon_medium</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:tint">?colorControlNormal</item>
+        <item name="android:padding">@dimen/margin_1x</item>
+    </style>
+
+    <style name="ImageButton.Accent">
+        <item name="android:tint">?colorAccent</item>
+    </style>
+
+    <style name="ImageButton.Accent.Small">
+        <item name="android:layout_height">@dimen/icon_small</item>
+        <item name="android:layout_width">@dimen/icon_small</item>
+    </style>
+
+    <style name="ImageButton.Accent.Large">
+        <item name="android:layout_height">@dimen/icon_large</item>
+        <item name="android:layout_width">@dimen/icon_large</item>
+    </style>
+
+    <style name="FabButton" parent="Widget.Design.FloatingActionButton">
+        <item name="rippleColor">?colorPrimaryDark</item>
+    </style>
+
+</resources>

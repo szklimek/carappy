@@ -1,4 +1,4 @@
-package com.szklimek.auto;
+package com.szklimek.base;
 
 public class Log {
 

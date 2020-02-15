@@ -3,8 +3,9 @@ package com.szklimek.auto
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Context
+import com.szklimek.base.Log
 
-class DataManager(context: Context) {
+class PreferenceManager(context: Context) {
     init {
         Log.d("Init $this")
     }

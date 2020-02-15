@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">base</string>
+    <string name="all_save">Save</string>
+    <string name="all_cancel">Cancel</string>
+    <string name="all_loading">Loading..</string>
+    <string name="all_retry">Retry</string>
+    <string name="all_refresh">Refresh</string>
+
+    <string name="error_connection_error">Unable to connect to the server. There might be problem with the server or your internet connection. Try again</string>
+    <string name="error_service_unavailable">Service temporary unavailable. Please try again later</string>
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_missing_resources">Unfortunately we could not find what you were looking for.</string>
+
+</resources>

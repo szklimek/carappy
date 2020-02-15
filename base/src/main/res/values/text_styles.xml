@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_micro">11sp</dimen>
+    <dimen name="text_small">13sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_large">18sp</dimen>
+    <dimen name="text_x_large">24sp</dimen>
+    <dimen name="text_xx_large">28sp</dimen>
+    <dimen name="text_xxx_large">36sp</dimen>
+
+    <!-- Texts -->
+    <style name="Text" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeMinTextSize">@dimen/text_small</item>
+        <item name="autoSizeMaxTextSize">@dimen/text_x_large</item>
+    </style>
+
+    <style name="Text.Body">
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="Text.Body.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Body.Secondary">
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="Text.Body.Medium">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="Text.Body.Large">
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="Text.Body.Large.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Body.XLarge">
+        <item name="android:textSize">@dimen/text_x_large</item>
+    </style>
+
+    <style name="Text.Body.XXLarge">
+        <item name="android:textSize">@dimen/text_xx_large</item>
+    </style>
+
+    <style name="Text.Inverse">
+        <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    </style>
+
+    <style name="Text.Inverse.Large">
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="Text.Head">
+        <item name="android:textColor">?android:colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Head.Medium">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="Text.Head.Large">
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="Text.Head.XLarge">
+        <item name="android:textSize">@dimen/text_x_large</item>
+    </style>
+
+    <style name="Text.Head.XXLarge">
+        <item name="android:textSize">@dimen/text_xx_large</item>
+    </style>
+
+    <!-- Edit text fields -->
+    <style name="EditField" />
+
+    <style name="EditField.Inverse">
+        <item name="android:maxLines">1</item>
+        <item name="android:backgroundTint">@color/grey_200</item>
+        <item name="android:textColor">@color/grey_200</item>
+        <item name="android:imeOptions">actionDone</item>
+    </style>
+</resources>
