@@ -87,6 +87,10 @@ class Elm327DeviceManager(private val device: BluetoothDevice) :
     override fun initOBD() {
         Log.d("")
         if (!invalidateConnection()) return
+        if (obdProtocolState.value == ObdState.ObdLoading) {
+            Log.d("Trying to reinitialize OBD while OBD loading. Aborting")
+            return
+        }
 
         obdProtocolState.postValue(ObdState.ObdLoading)
         coroutineScope.launch {
@@ -101,7 +105,6 @@ class Elm327DeviceManager(private val device: BluetoothDevice) :
                         ObdRawCommand("AT SP3"),
                         DescribeProtocolCommand()
                     ).forEach {
-
                         sendObdCommand(it)
                         Thread.sleep(500)
                     }
