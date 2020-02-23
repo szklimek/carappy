@@ -2,6 +2,8 @@ package com.szklimek.auto
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.Observer
 import com.github.pires.obd.commands.ObdCommand
 import com.github.pires.obd.commands.engine.RPMCommand
@@ -26,6 +28,8 @@ class MainActivity : BaseActivity() {
     private val connectionStateObserver = Observer<ConnectionState> { updateConnectionState(it) }
     private val obdStateObserver = Observer<ObdState> { updateObdState(it) }
     private val serviceStateObserver = Observer<ObdServiceState> { updateObdServiceState(it) }
+
+    private val obdFailureHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +69,15 @@ class MainActivity : BaseActivity() {
         listOf(
             RPMCommand()
         ).forEach { command ->
+
+            // TODO Handle OBD connection problem during session
+            // Set command result timeout (if no response received)
+//            obdFailureHandler.postDelayed(
+//                { obdService.resetConnection() }, 3000
+//            )
             obdService.runCommand(command).apply {
+                // TODO Handle OBD connection problem during session
+//                obdFailureHandler.removeCallbacksAndMessages(null)
                 when {
                     isFailure -> {
                         Log.e("Unable to retrieve OBD data for command: $command")

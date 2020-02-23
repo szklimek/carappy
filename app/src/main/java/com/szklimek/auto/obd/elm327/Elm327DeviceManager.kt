@@ -82,6 +82,8 @@ class Elm327DeviceManager(private val device: BluetoothDevice) :
     override fun resetConnection() {
         Log.d("")
         socket?.close()
+        deviceConnectionState.postValue(ConnectionState.NotConnected)
+        obdProtocolState.postValue(ObdState.ObdNotReady)
     }
 
     override fun initOBD() {

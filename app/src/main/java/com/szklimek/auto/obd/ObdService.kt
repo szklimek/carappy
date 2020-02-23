@@ -82,6 +82,11 @@ class ObdService(val preferenceManager: PreferenceManager) {
         obdDeviceManager!!.connect()
     }
 
+    fun resetConnection() {
+        Log.d("")
+        obdDeviceManager!!.resetConnection()
+    }
+
     fun resetDevice() {
         Log.d("")
         obdDeviceManager?.deviceConnectionState?.removeObserver(connectionStateObserver)
@@ -95,7 +100,11 @@ class ObdService(val preferenceManager: PreferenceManager) {
         obdDeviceManager!!.initOBD()
     }
 
-    fun runCommand(command: ObdCommand) = obdDeviceManager!!.runCommand(command)
+    fun runCommand(command: ObdCommand): Result<String> {
+        val result = obdDeviceManager!!.runCommand(command)
+        Log.d("Command result {${command.name}}: $result")
+        return result
+    }
 
     fun runAsyncCommand(command: ObdCommand, resultHandler: (Result<String>) -> Unit) {
         obdDeviceManager?.runAsyncCommand(command, resultHandler)
