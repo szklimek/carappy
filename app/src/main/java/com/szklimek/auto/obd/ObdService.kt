@@ -31,10 +31,11 @@ class ObdService(val preferenceManager: PreferenceManager) {
     private val logsObserver = Observer<List<String>> { logs.value = it }
 
     init {
-        preferenceManager.getPairedDevice()?.let { initializeDeviceManager(Elm327DeviceManager(it)) }
+        preferenceManager.getPairedDevice()
+            ?.let { initializeDeviceManager(Elm327DeviceManager(it)) }
     }
 
-    fun initializeDeviceManager(obdDeviceManager: ObdDeviceManager) {
+    private fun initializeDeviceManager(obdDeviceManager: ObdDeviceManager) {
         Log.d("")
         this.obdDeviceManager = obdDeviceManager
         obdDeviceManager.deviceConnectionState.observeForever(connectionStateObserver)

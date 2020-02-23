@@ -88,8 +88,6 @@ class Elm327BluetoothConnectionActivity : BaseActivity() {
         Log.d("Update paired device: $deviceIdentifier")
         button_connect.isEnabled = true
         paired_device.text = deviceIdentifier
-
-        obdService.initializeDeviceManager(Elm327DeviceManager(bluetoothDevice))
     }
 
     private fun updateConnectionState(connectionState: ConnectionState) {
