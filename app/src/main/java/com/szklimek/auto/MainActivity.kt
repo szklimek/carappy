@@ -68,9 +68,13 @@ class MainActivity : BaseActivity() {
             obdService.runCommand(command).apply {
                 when {
                     isFailure -> {
-                        Log.d("Unable to retrieve OBD data for command: $command")
+                        Log.e("Unable to retrieve OBD data for command: $command")
                     }
-                    isSuccess -> updateEcuDataViews(command, getOrDefault(""))
+                    isSuccess -> {
+                        runOnUiThread {
+                            updateEcuDataViews(command, getOrDefault(""))
+                        }
+                    }
                 }
             }
         }
@@ -84,7 +88,9 @@ class MainActivity : BaseActivity() {
         when (command) {
             is RPMCommand -> {
                 rpm_status.text = result
-                runCatching { rpm_gauge.moveToValue(result.toFloat().div(100)) }
+                runCatching {
+                    rpm_gauge.moveToValue(command.rpm.toFloat().div(100))
+                }
             }
         }
     }
