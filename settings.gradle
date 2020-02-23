@@ -1,2 +1,2 @@
 include ':app', ':base'
-rootProject.name='Auto'
+rootProject.name='carappy'

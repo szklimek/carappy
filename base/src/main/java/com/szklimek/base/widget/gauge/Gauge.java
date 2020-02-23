@@ -81,6 +81,7 @@ public class Gauge extends View {
     private int faceColor;
     private int scaleColor;
     private int needleColor;
+    private int rimCircleColor;
     private Paint upperTextPaint;
     private Paint lowerTextPaint;
 
@@ -128,6 +129,7 @@ public class Gauge extends View {
         faceColor = a.getColor(R.styleable.Gauge_faceColor, Color.argb(0xff, 0xff, 0xff, 0xff));
         scaleColor = a.getColor(R.styleable.Gauge_scaleColor, 0x9f004d0f);
         needleColor = a.getColor(R.styleable.Gauge_needleColor, Color.RED);
+        rimCircleColor = a.getColor(R.styleable.Gauge_rimCircleColor, Color.argb(0x4f, 0x33, 0x36, 0x33));
         needleShadow = a.getBoolean(R.styleable.Gauge_needleShadow, needleShadow);
         requestedTextSize = a.getFloat(R.styleable.Gauge_textSize, requestedTextSize);
         upperText = a.getString(R.styleable.Gauge_upperText) == null ? upperText : fromHtml(a.getString(R.styleable.Gauge_upperText)).toString();
@@ -161,8 +163,8 @@ public class Gauge extends View {
         rimCirclePaint = new Paint();
         rimCirclePaint.setAntiAlias(true);
         rimCirclePaint.setStyle(Paint.Style.STROKE);
-        rimCirclePaint.setColor(Color.argb(0x4f, 0x33, 0x36, 0x33));
-        rimCirclePaint.setStrokeWidth(0.005f);
+        rimCirclePaint.setColor(rimCircleColor);
+        rimCirclePaint.setStrokeWidth(4f);
 
         facePaint = new Paint();
         facePaint.setAntiAlias(true);
@@ -209,7 +211,6 @@ public class Gauge extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        drawRim(canvas);
         drawFace(canvas);
         drawScale(canvas);
         drawLabels(canvas);
@@ -240,11 +241,6 @@ public class Gauge extends View {
             lastMoveTime = System.currentTimeMillis();
             postInvalidateDelayed(deltaTimeInterval);
         }
-    }
-
-    private void drawRim(Canvas canvas) {
-        canvas.drawOval(rimRect, rimPaint);
-        canvas.drawOval(rimRect, rimCirclePaint);
     }
 
     private void drawFace(Canvas canvas) {

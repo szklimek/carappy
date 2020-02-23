@@ -12,6 +12,7 @@
         <attr name="initialValue" format="float" />
         <attr name="labelTextSize" format="float" />
         <attr name="faceColor" format="integer" />
+        <attr name="rimCircleColor" format="integer" />
         <attr name="scaleColor" format="integer" />
         <attr name="needleShadow" format="boolean" />
         <attr name="needleColor" format="integer" />
